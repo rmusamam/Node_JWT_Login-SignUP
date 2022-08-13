@@ -3,6 +3,7 @@ const mongoose= require('mongoose')
 const userSchema = mongoose.Schema({
     email:{
         type:String,
+        unique: true,
         require:true,
         min:5
     },
@@ -17,7 +18,7 @@ const userSchema = mongoose.Schema({
         min:5
     }
 
-})
+}) 
 const userAccount=mongoose.model('userAccounts',userSchema)
 
 module.exports=userAccount
