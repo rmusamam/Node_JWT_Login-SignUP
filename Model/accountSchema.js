@@ -1,6 +1,6 @@
 const mongoose= require('mongoose')
 
-const schema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     email:{
         type:String,
         require:true,
@@ -18,5 +18,6 @@ const schema = mongoose.Schema({
     }
 
 })
+const userAccount=mongoose.model('userAccounts',userSchema)
 
-module.exports=schema
+module.exports=userAccount

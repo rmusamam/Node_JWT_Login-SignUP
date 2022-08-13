@@ -3,26 +3,24 @@ const app = express()
 const mongoose= require('mongoose')
 const route=require('./Route/account.js')
 const bodyParser=require('body-parser')
+const dotenv= require('dotenv')
+dotenv.config()
+
+const port = process.env.PORT||3000
 
 //  app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
-
-const url= process.env.DB_CONNECTION
-mongoose.connect(url,{
-    useNewUrlParser:true
-},
-()=>{
-    console.log('DB connected')
-})
-
-
 app.use('/',route)
 
 
+const url= process.env.DB_CONNECTION.replace('<password>',process.env.PASSWORD)
 
 
+ mongoose.connect(url,{
+    useNewUrlParser:true
+ }).then(()=>console.log("DB connected"))
 
-app.listen(3000,()=>{
-    console.log('server active on 3000')
+
+app.listen(port,()=>{
+    console.log(`server active on ${port}`)
 })

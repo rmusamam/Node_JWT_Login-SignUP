@@ -1,10 +1,10 @@
-const schema = require('../Model/accountSchema')
-
-// const validate=require()
+const userAccount = require('../Model/accountSchema')
 
 
-exports.account= (req,res)=>{
+exports.account= async(req,res)=>{
     const data=req.body
+
+    const emailExist=await userAccount.findOne({email:data.email})
 
 
     console.log('this is my req.body',data)
