@@ -1,0 +1,27 @@
+{
+  "name": "node_jwt_login-signup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.2",
+    "nodemon": "^2.0.19"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmusamam/Node_JWT_Login-SignUP.git"
+  },
+  "author": "muhammad usama",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmusamam/Node_JWT_Login-SignUP/issues"
+  },
+  "homepage": "https://github.com/rmusamam/Node_JWT_Login-SignUP#readme"
+}
