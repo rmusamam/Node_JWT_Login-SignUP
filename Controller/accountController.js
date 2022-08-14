@@ -1,14 +1,10 @@
 const userAccount = require("../Model/accountSchema");
 const bcrypt = require("bcryptjs");
-
+const userSchema =require('../Model/accountSchema')
 exports.account = async (req, res) => {
   const data = req.body;
-  console.log('in controller: ', data)
-//   const emailExist = await userAccount.findOne({ email: data.email });
-//   if (emailExist) {
-//     console.log("email already axist");
-//     res.status(400).send("Email already exists");
-//   }
+  // console.log('in controller: ', data)
+
 
   const salt = await bcrypt.genSalt(10);
 
@@ -38,3 +34,16 @@ exports.account = async (req, res) => {
   console.log(addUser)
   res.send("registeration  done");
 };
+
+
+
+exports.loginAccount= async(req,res)=>{
+  console.log('in loginAccount');
+const login=await userSchema.findOne({email:req.body.email})
+if(!login) return res.status(400).send("Email already exist")
+console.log("email matched");
+const validPassword = await bcrypt.compare(req.body.password,login.password)
+if(!validPassword) return res.status(400).send("Incorrect Password")
+
+console.log("login successfully");
+}

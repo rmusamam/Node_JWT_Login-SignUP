@@ -1,8 +1,10 @@
 const router = require("express").Router();
 const accountControll = require("../Controller/accountController");
-const validateRegisteration =require('../Middleware/validation')
-const email = require("../Middleware/email");
+const {validateRegisteration,validateLogin} =require('../Middleware/validateInput')
+const email = require("../Middleware/emailExistCheckForValidation");
 
-router.route("/register",).post(email, validateRegisteration, accountControll.account);
+router.route("/register").post(email, validateRegisteration, accountControll.account);
+router.route('/').post(validateLogin,accountControll.loginAccount)
+
 
 module.exports = router;
