@@ -1,10 +1,11 @@
 const userAccount = require("../Model/accountSchema");
 const bcrypt = require("bcryptjs");
-const userSchema =require('../Model/accountSchema')
+const userSchema = require("../Model/accountSchema");
+const jwt = require("jsonwebtoken");
+
 exports.account = async (req, res) => {
   const data = req.body;
   // console.log('in controller: ', data)
-
 
   const salt = await bcrypt.genSalt(10);
 
@@ -25,25 +26,28 @@ exports.account = async (req, res) => {
   // catch(err){
   //     res.status(400).send("Error in saving data in DB")
   // }
-  const addUser = await userAccount.create({
-    email: data.email,
-    name: data.name,
-    password: hashedPassword,
-  }).then(()=>console.log("data has been saved"))
+  const addUser = await userAccount
+    .create({
+      email: data.email,
+      name: data.name,
+      password: hashedPassword,
+    })
+    .then(() => console.log("data has been saved"));
 
-  console.log(addUser)
+  console.log(addUser);
   res.send("registeration  done");
 };
 
+exports.loginAccount = async (req, res) => {
+  console.log("in loginAccount");
+  const login = await userSchema.findOne({ email: req.body.email });
+  if (!login) return res.status(400).send("Email not exist");
+  console.log("email matched", login);
+  const validPassword = await bcrypt.compare(req.body.password, login.password);
+  if (!validPassword) return res.status(400).send("Incorrect Password");
 
+  console.log("login successfully valid password:", validPassword);
 
-exports.loginAccount= async(req,res)=>{
-  console.log('in loginAccount');
-const login=await userSchema.findOne({email:req.body.email})
-if(!login) return res.status(400).send("Email already exist")
-console.log("email matched");
-const validPassword = await bcrypt.compare(req.body.password,login.password)
-if(!validPassword) return res.status(400).send("Incorrect Password")
-
-console.log("login successfully");
-}
+  const token = jwt.sign({ _id: login._id }, process.env.TOKEN_SECRET);
+  res.send(token);
+};

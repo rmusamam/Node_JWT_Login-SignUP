@@ -2,7 +2,7 @@ const joi = require("@hapi/joi");
 const userSchema= require('../Model/accountSchema')
 
 const validateRegisteration = (req, res, next) => {
-    console.log('in validation')
+    console.log('in validateInput validateRegisteration')
    const data = req.body;
    const schema = joi.object({
     email: joi.string().min(5).required(),
